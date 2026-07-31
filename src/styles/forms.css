@@ -1,0 +1,107 @@
+/* Lead form styles (Brief 05). Accessible, clear error/success states. */
+
+.form {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.field {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.field > label {
+  font-weight: 600;
+  font-size: var(--step-0);
+}
+
+.field .hint {
+  color: var(--brand-fg-muted);
+  font-size: var(--step--1);
+}
+
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  padding: 11px 13px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--brand-border);
+  background: var(--brand-surface);
+  color: var(--brand-fg);
+  font: inherit;
+}
+
+.field textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  border-color: var(--brand-accent);
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-accent) 30%, transparent);
+}
+
+.field input[aria-invalid='true'],
+.field textarea[aria-invalid='true'] {
+  border-color: #d92d20;
+}
+
+.field .error {
+  color: #d92d20;
+  font-size: var(--step--1);
+}
+
+.consent {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.consent input {
+  width: auto;
+  margin-top: 4px;
+}
+
+/* Honeypot: visually and programmatically hidden from real users. */
+.hp {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.form-status {
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  font-size: var(--step-0);
+}
+
+.form-status--error {
+  background: rgba(217, 45, 32, 0.1);
+  color: #b42318;
+  border: 1px solid rgba(217, 45, 32, 0.3);
+}
+
+.form-success {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: start;
+}
+
+.form-success__check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--brand-accent-2) 22%, transparent);
+  color: var(--brand-accent-2);
+  font-size: var(--step-1);
+}

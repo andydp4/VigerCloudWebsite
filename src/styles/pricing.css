@@ -1,0 +1,110 @@
+/* Pricing styles (Brief 05). */
+
+.billing-toggle {
+  display: inline-flex;
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-pill);
+  padding: 4px;
+  background: var(--brand-surface);
+  gap: 4px;
+}
+
+.billing-toggle button {
+  border: none;
+  background: transparent;
+  color: var(--brand-fg-muted);
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+}
+
+.billing-toggle button[aria-pressed='true'] {
+  background: var(--brand-accent);
+  color: var(--brand-on-accent);
+}
+
+.plan-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+.plan {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  background: var(--brand-surface);
+}
+
+.plan__price {
+  font-size: var(--step-3);
+  font-weight: 800;
+}
+
+.plan__price small {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--brand-fg-muted);
+}
+
+.plan ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.plan li::before {
+  content: '✓';
+  color: var(--brand-accent-2);
+  font-weight: 800;
+  margin-right: 8px;
+}
+
+.plan .btn {
+  margin-top: auto;
+}
+
+.compare {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--space-6);
+  font-size: var(--step-0);
+}
+
+.compare th,
+.compare td {
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--brand-border);
+  vertical-align: top;
+}
+
+.compare thead th {
+  font-size: var(--step--1);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--brand-fg-muted);
+}
+
+.compare td[data-yes='true']::before {
+  content: '✓';
+  color: var(--brand-accent-2);
+  font-weight: 800;
+}
+
+.compare td[data-yes='false']::before {
+  content: '—';
+  color: var(--brand-fg-muted);
+}
+
+.compare-scroll {
+  overflow-x: auto;
+}

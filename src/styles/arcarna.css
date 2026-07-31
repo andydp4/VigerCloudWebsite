@@ -1,0 +1,155 @@
+/*
+ * Arcarna experience styles (Brief 04). Visually distinct (dark, premium) but scoped under
+ * [data-brand="arcarna"] so it can't leak into corporate pages. Motion is applied only via the
+ * `.reveal` pattern and is fully neutralised by the global prefers-reduced-motion rule, leaving an
+ * identical, fully-functional non-animated version.
+ */
+
+.arcarna {
+  background:
+    radial-gradient(1000px 600px at 85% -5%, rgba(124, 92, 255, 0.25), transparent 60%),
+    radial-gradient(800px 500px at -10% 15%, rgba(53, 224, 196, 0.14), transparent 55%),
+    var(--brand-bg);
+  color: var(--brand-fg);
+}
+
+.arcarna .container {
+  position: relative;
+}
+
+.arcarna-hero {
+  padding-block: var(--space-9);
+}
+
+.arcarna-hero h1 {
+  font-size: var(--step-4);
+  max-width: 16ch;
+}
+
+.arcarna-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--brand-border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--brand-accent-2);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: var(--step--1);
+  margin-bottom: var(--space-4);
+}
+
+/* Scene rail */
+.scene {
+  padding-block: var(--space-8);
+  border-top: 1px solid var(--brand-border);
+}
+
+.scene__kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: var(--step--1);
+  color: var(--brand-accent-2);
+  font-weight: 700;
+}
+
+.scene h2 {
+  font-size: var(--step-3);
+  margin-top: var(--space-3);
+  max-width: 20ch;
+}
+
+.scene p {
+  color: var(--brand-fg-muted);
+  font-size: var(--step-1);
+  max-width: 52ch;
+  margin-top: var(--space-3);
+}
+
+/* Chapters */
+.chapters {
+  display: grid;
+  gap: var(--space-5);
+  margin-top: var(--space-6);
+}
+
+.chapter {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-lg);
+  background: var(--brand-surface);
+}
+
+@media (max-width: 680px) {
+  .chapter {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+}
+
+.chapter__label {
+  font-size: var(--step-2);
+  font-weight: 800;
+  color: var(--brand-accent);
+  letter-spacing: -0.02em;
+}
+
+.chapter__result {
+  font-size: var(--step-1);
+  font-weight: 700;
+}
+
+.chapter__mechanism {
+  color: var(--brand-fg-muted);
+  margin-top: var(--space-2);
+}
+
+.arcarna-cta {
+  margin-top: var(--space-7);
+  text-align: center;
+  padding: var(--space-8) var(--space-5);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-lg);
+  background: var(--brand-surface);
+}
+
+/* Reveal-on-scroll animation (JS toggles data-visible). */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  will-change: opacity, transform;
+}
+
+.reveal[data-visible='true'] {
+  opacity: 1;
+  transform: none;
+}
+
+/* If JS never runs or motion is reduced, content must still be fully visible. */
+.no-js .reveal,
+[data-motion='reduced'] .reveal {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+.motion-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: var(--space-4);
+  font-size: var(--step--1);
+  color: var(--brand-fg-muted);
+}
