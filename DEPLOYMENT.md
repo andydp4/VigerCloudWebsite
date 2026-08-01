@@ -61,6 +61,20 @@ Set these on the host (never commit real values). See `.env.example`.
    site continues to use built-in fallback data, so there is never a blank page.
 4. Schemas live in `src/sanity/schemaTypes/`; the content access seam is `src/lib/content.ts`.
 
+### CORS origins (required for the Studio to log in / load / save)
+
+The Studio runs in the browser and calls the Sanity API, so each origin it runs from must be
+allow-listed on the project. An origin is `scheme://host[:port]` — **no path, no trailing slash**
+(e.g. `http://localhost:3000`, `https://vigercloud.com`, `https://staging.vigercloud.com`).
+
+- Dashboard: https://www.sanity.io/manage → your project → **API → CORS origins → Add CORS origin**
+  → enter the origin, tick **Allow credentials**, Save. Repeat per environment.
+- CLI (after `npx sanity login`): `npx sanity cors add http://localhost:3000 --credentials`
+  (list/remove with `npx sanity cors list` / `npx sanity cors delete <origin>`).
+
+"Allow credentials" must be on because the Studio sends your auth session (and read token, if used).
+CORS only permits browser requests; it does not itself grant data access.
+
 ## Staging → production checklist (Brief 08)
 
 Before staging deploy:
