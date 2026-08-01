@@ -2,9 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import '@/styles/globals.css'
 import '@/styles/components.css'
 import '@/styles/forms.css'
-import { SkipLink } from '@/components/SkipLink'
-import { SiteHeader } from '@/components/SiteHeader'
-import { SiteFooter } from '@/components/SiteFooter'
+import { SiteChrome } from '@/components/SiteChrome'
 import { DEFAULT_DESCRIPTION, SITE_NAME } from '@/lib/metadata'
 import { allowIndexing, publicEnv } from '@/lib/env'
 
@@ -29,12 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en-GB" data-brand="viger">
       <body>
-        <SkipLink />
-        <SiteHeader />
-        <main id="main-content" tabIndex={-1}>
-          {children}
-        </main>
-        <SiteFooter />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   )

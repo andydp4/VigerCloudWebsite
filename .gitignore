@@ -30,3 +30,8 @@ coverage
 
 # typescript
 *.tsbuildinfo
+
+# sanity
+.sanity/
+/dist
+sanity.types.ts

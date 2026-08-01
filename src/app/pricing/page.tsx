@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import '@/styles/pricing.css'
 import { buildMetadata } from '@/lib/metadata'
 import { PricingTable } from '@/components/PricingTable'
-import { faqs } from '@/content/site'
+import { getFaqs, getPricingPlans } from '@/lib/content'
+import { comparisonRows } from '@/content/pricing'
 import { StatusBadge } from '@/components/StatusBadge'
 
 export const metadata: Metadata = buildMetadata({
@@ -12,7 +13,8 @@ export const metadata: Metadata = buildMetadata({
   path: '/pricing',
 })
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  const [plans, faqs] = await Promise.all([getPricingPlans(), getFaqs()])
   return (
     <section className="section container stack">
       <div>
@@ -34,7 +36,7 @@ export default function PricingPage() {
         entitlements are not yet approved (see the decision log).
       </div>
 
-      <PricingTable />
+      <PricingTable plans={plans} rows={comparisonRows} />
 
       <div>
         <h2 className="h3" style={{ fontSize: 'var(--step-2)' }}>

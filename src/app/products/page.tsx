@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { buildMetadata } from '@/lib/metadata'
-import { products } from '@/content/products'
+import { getProducts } from '@/lib/content'
 import { StatusBadge } from '@/components/StatusBadge'
 import type { ProductStatus } from '@/content/types'
 
@@ -19,7 +19,8 @@ const STATUS_LABEL: Record<ProductStatus, string> = {
   concept: 'Concept',
 }
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const products = await getProducts()
   return (
     <section className="section container stack">
       <div>

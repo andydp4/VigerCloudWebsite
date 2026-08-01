@@ -1,19 +1,20 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { buildMetadata } from '@/lib/metadata'
-import { getLegalDocument, legalDocuments } from '@/content/site'
+import { getLegalDocument, getLegalDocuments } from '@/lib/content'
 import { StatusBadge } from '@/components/StatusBadge'
 
 interface Params {
   params: { slug: string }
 }
 
-export function generateStaticParams() {
-  return legalDocuments.map((doc) => ({ slug: doc.slug }))
+export async function generateStaticParams() {
+  const docs = await getLegalDocuments()
+  return docs.map((doc) => ({ slug: doc.slug }))
 }
 
-export function generateMetadata({ params }: Params): Metadata {
-  const doc = getLegalDocument(params.slug)
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
+  const doc = await getLegalDocument(params.slug)
   if (!doc) return buildMetadata({ title: 'Legal', path: `/legal/${params.slug}`, noindex: true })
   return buildMetadata({
     title: doc.title,
@@ -28,8 +29,8 @@ const BRAND_LABEL: Record<string, string> = {
   shared: 'Viger Cloud & Arcarna',
 }
 
-export default function LegalPage({ params }: Params) {
-  const doc = getLegalDocument(params.slug)
+export default async function LegalPage({ params }: Params) {
+  const doc = await getLegalDocument(params.slug)
   if (!doc) notFound()
 
   const wrapperBrand = doc.brand === 'arcarna' ? 'arcarna' : 'viger'

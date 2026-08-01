@@ -2,19 +2,24 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { comparisonRows, pricingPlans } from '@/content/pricing'
+import type { ComparisonRow, PricingPlan } from '@/content/types'
 import { track } from '@/lib/analytics'
 
 type Cycle = 'monthly' | 'annual'
 
-function priceLabel(plan: (typeof pricingPlans)[number], cycle: Cycle) {
+function priceLabel(plan: PricingPlan, cycle: Cycle) {
   if (plan.consultationOnly) return 'Let’s talk'
   const value = cycle === 'monthly' ? plan.monthly : plan.annual
   if (value == null) return 'Let’s talk'
   return `£${value}`
 }
 
-export function PricingTable() {
+interface PricingTableProps {
+  plans: PricingPlan[]
+  rows: ComparisonRow[]
+}
+
+export function PricingTable({ plans: pricingPlans, rows: comparisonRows }: PricingTableProps) {
   const [cycle, setCycle] = useState<Cycle>('monthly')
 
   useEffect(() => {

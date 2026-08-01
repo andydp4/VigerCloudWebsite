@@ -2,8 +2,8 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import '@/styles/arcarna.css'
 import { buildMetadata } from '@/lib/metadata'
-import { arcarnaChapters, arcarnaScenes } from '@/content/arcarna'
-import { pricingPlans } from '@/content/pricing'
+import { arcarnaScenes } from '@/content/arcarna'
+import { getArcarnaChapters, getPricingPlans } from '@/lib/content'
 import { Reveal } from '@/components/Reveal'
 import { StatusBadge } from '@/components/StatusBadge'
 
@@ -14,7 +14,11 @@ export const metadata: Metadata = buildMetadata({
   path: '/arcarna',
 })
 
-export default function ArcarnaPage() {
+export default async function ArcarnaPage() {
+  const [arcarnaChapters, pricingPlans] = await Promise.all([
+    getArcarnaChapters(),
+    getPricingPlans(),
+  ])
   const entryPlan = pricingPlans[0]
 
   return (

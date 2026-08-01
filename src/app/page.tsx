@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { buildMetadata } from '@/lib/metadata'
-import { products } from '@/content/products'
-import { companyUpdates } from '@/content/site'
+import { getCompanyUpdates, getProducts } from '@/lib/content'
 import { StatusBadge } from '@/components/StatusBadge'
 
 export const metadata: Metadata = buildMetadata({
@@ -18,7 +17,8 @@ const audiences = [
   { title: 'Leadership', body: 'Make confident calls backed by clear, auditable data.' },
 ]
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [products, companyUpdates] = await Promise.all([getProducts(), getCompanyUpdates()])
   const flagship = products.find((p) => p.slug === 'arcarna')
 
   return (

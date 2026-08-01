@@ -21,6 +21,8 @@ const securityHeaders = [
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // Portable, self-contained server build for Node hosting (e.g. Hostinger) — see DEPLOYMENT.md.
+  output: 'standalone',
   async headers() {
     return [
       {

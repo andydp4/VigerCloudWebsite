@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { buildMetadata } from '@/lib/metadata'
-import { company } from '@/content/site'
+import { getSiteSettings } from '@/lib/content'
 import { StatusBadge } from '@/components/StatusBadge'
 
 export const metadata: Metadata = buildMetadata({
@@ -11,7 +11,8 @@ export const metadata: Metadata = buildMetadata({
   path: '/about',
 })
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const company = await getSiteSettings()
   return (
     <section className="section container stack">
       <div>

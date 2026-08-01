@@ -13,6 +13,8 @@ copy, credentials, pricing entitlements, or final logo files.
 | C3 | Lead delivery stays in **test mode** until Staging Gate | No CRM/email until approved (Brief 05). |
 | C4 | Two non-mixable brand token sets (`viger`, `arcarna`) | Scoped via `[data-brand]` (Brief 02). |
 | C5 | Prices displayed **exclude VAT** | Wording present site-wide (Brief 05). |
+| C6 | CMS: **Sanity** (embedded Studio at `/studio`) | Brief 07 preferred. Optional with local fallback via `src/lib/content.ts`. |
+| C7 | Deployment: **Next.js standalone** output + Docker | Portable Node hosting incl. Hostinger (Brief 08). |
 
 ## Assumptions (safe to proceed, confirm before launch)
 
@@ -47,13 +49,23 @@ copy, credentials, pricing entitlements, or final logo files.
 | 04 Arcarna | Implemented | `src/app/arcarna`, `src/components/Reveal.tsx`, `src/styles/arcarna.css` |
 | 05 Pricing/leads | Implemented (test mode) | `src/app/pricing`, `src/components/PricingTable.tsx`, `src/components/LeadForm.tsx`, `src/app/api/lead` |
 | 06 Compliance/SEO | Implemented (templates) | `src/app/legal`, `src/app/sitemap.ts`, `src/app/robots.ts`, `src/lib/metadata.ts`, `src/lib/analytics.ts` |
-| 07 Content admin | First release via typed content; CMS deferred | `src/content/**`, `CONTENT.md` |
-| 08 Integration/handover | Deferred (Hostinger) | pending Staging Gate |
+| 07 Content admin | Implemented (Sanity, optional + fallback) | `src/sanity/**`, `src/lib/content.ts`, `sanity.config.ts`, `CONTENT.md` |
+| 08 Integration/handover | Packaging implemented; deploy pending | `next.config.mjs`, `Dockerfile`, `DEPLOYMENT.md` |
 
-## Deferred (explicitly out of scope for this first release)
+## Implemented since first release
 
-- **Brief 07 (full):** Sanity CMS integration. First release uses typed content modules in
-  `src/content/**` (MDX/structured content acceptable for simple editing per the brief). Prices are
-  always structured data, never unstructured page text.
-- **Brief 08:** Hostinger staging deployment, DNS/mail checks, and production launch. Requires
-  confirmed domains and provider access (B5, B8).
+- **Brief 07:** Sanity Studio embedded at `/studio` with schemas mirroring the content models. The
+  CMS is **optional**: without a project id the site uses built-in fallback content and the studio
+  shows a setup notice. Content is read through a single seam (`src/lib/content.ts`) so migrating
+  fields to the CMS never touches pages. Prices remain structured data, never free text.
+- **Brief 08 (packaging):** `output: 'standalone'`, a multi-stage `Dockerfile`, and `DEPLOYMENT.md`
+  (Hostinger + Docker, env vars, staging→prod checklist, rollback).
+
+## Still deferred / blocked
+
+- **Sanity project creation** needs a Sanity account + project id/token (extends B5). Until then the
+  site runs on fallback content — no blank pages.
+- **Brief 08 (deploy):** actual Hostinger staging/production deploy, DNS/mail checks and launch
+  require confirmed domains and provider access (B5, B8) and Staging Gate sign-off.
+- Comparison-table rows and Arcarna narrative scenes remain in `src/content/**` for now (not yet
+  modelled in Sanity); documented in `CONTENT.md`.

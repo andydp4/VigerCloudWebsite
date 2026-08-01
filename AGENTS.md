@@ -38,3 +38,15 @@ Standard scripts are in `package.json` (`dev`, `build`, `start`, `lint`, `typech
   `<Suspense>` boundary on their page, or the build fails. Existing pages already do this.
 - Lead delivery stays in test mode until the Staging Gate (Brief 05). Switching to live requires
   confirmed providers/credentials and is deliberately unimplemented.
+- **CMS (Sanity) is optional.** Pages read content through `src/lib/content.ts`, which returns Sanity
+  data only when `NEXT_PUBLIC_SANITY_PROJECT_ID` is set (and not `placeholder`); otherwise, and on
+  any Sanity fetch error, it falls back to the local arrays in `src/content/**`. So the site runs
+  fully with no CMS credentials — don't treat a missing Sanity project as broken.
+- Studio is embedded at `/studio`. When unconfigured it renders a setup notice (not the editor).
+  Site chrome (header/footer) is intentionally hidden on `/studio` via `SiteChrome` (client,
+  path-based). Sanity schemas are in `src/sanity/schemaTypes/`; the desk structure is
+  `src/sanity/structure.ts`; Studio config is the root `sanity.config.ts`.
+- Deployment: `next.config.mjs` uses `output: 'standalone'`. `npm run build` emits
+  `.next/standalone/server.js`. A multi-stage `Dockerfile` and `DEPLOYMENT.md` cover Node/Hostinger
+  and Docker. The Studio route bundle is large (~1.4MB) by nature — that's expected, not a
+  regression.

@@ -2,8 +2,10 @@
   "name": "viger-cloud-website",
   "private": true,
   "version": "0.1.0",
+  "description": "Marketing website for Viger Cloud and Arcarna (Next.js + Sanity).",
   "engines": {
-    "node": ">=18.18"
+    "node": ">=18.18",
+    "npm": ">=9"
   },
   "scripts": {
     "dev": "next dev",
@@ -15,9 +17,14 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@sanity/image-url": "^1.2.0",
+    "@sanity/vision": "^3.99.0",
     "next": "^14.2.13",
+    "next-sanity": "^9.12.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "sanity": "^3.99.0",
+    "styled-components": "^6.4.4",
     "zod": "^3.23.8"
   },
   "devDependencies": {

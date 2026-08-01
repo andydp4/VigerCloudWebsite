@@ -46,11 +46,22 @@ npm run dev                 # start the dev server at http://localhost:3000
   and accessible lead forms validated on client and server (`/api/lead`), **test mode** only.
 - **06 Compliance & SEO** — Legal templates, canonical metadata, `sitemap.xml`, `robots.txt`
   (staging/system no-indexed), consent-aware analytics interface.
+- **07 Content admin** — **Sanity** Studio embedded at `/studio`, schemas mirroring the content
+  models, read through `src/lib/content.ts`. **Optional**: without a project id the site uses
+  built-in fallback content and `/studio` shows a setup notice.
+- **08 Packaging** — `output: 'standalone'`, multi-stage `Dockerfile`, and `DEPLOYMENT.md` for
+  Node/Hostinger/Docker deploys.
+
+### Content editing & CMS
+
+Content lives as typed data in `src/content/**` and is served via `src/lib/content.ts`. Connect a
+Sanity project (set `NEXT_PUBLIC_SANITY_PROJECT_ID` + `NEXT_PUBLIC_SANITY_DATASET`) to edit it in the
+Studio at `/studio`. See [`CONTENT.md`](./CONTENT.md) and [`DEPLOYMENT.md`](./DEPLOYMENT.md).
 
 ### Deferred (see `DECISIONS.md`)
 
-- **07 (full):** Sanity CMS. First release uses typed content modules; prices are always structured.
-- **08:** Hostinger staging/production deployment (needs confirmed domains + provider access).
+- Actual Hostinger staging/production **deploy** (needs confirmed domains + provider access).
+- Migrating comparison rows / Arcarna scenes into Sanity (still edited in `src/content/**`).
 
 ## Important
 
@@ -63,11 +74,14 @@ environment variables.
 
 ```
 src/
-  app/            App Router routes, API route, sitemap/robots, error pages
-  components/     Header, footer, lead form, pricing table, reveal, badges
-  content/        Typed content models + data (Brief 02/07)
-  lib/            env validation, metadata, lead schema, analytics
+  app/            App Router routes, API route, /studio, sitemap/robots, error pages
+  components/     Header, footer, chrome, lead form, pricing table, reveal, badges
+  content/        Typed content models + local fallback data (Brief 02)
+  lib/            env, metadata, lead schema, analytics, content accessor (CMS+fallback)
+  sanity/         Sanity env, client, schemas, desk structure (Brief 07)
   styles/         Global tokens + component/form/arcarna/pricing CSS
   test/           Test setup
+sanity.config.ts  Embedded Studio config
+Dockerfile        Standalone container image (Brief 08)
 briefs/           The source build briefs
 ```

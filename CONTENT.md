@@ -41,8 +41,25 @@ effective date this way in staging.
 | Contact/Partners | assumption/blocked | Inbox destinations (B4) |
 | Legal ×6 | placeholder | Reviewed wording (B7) |
 
-## Planned upgrade (Brief 07 full)
+## Sanity CMS (Brief 07)
 
-Migrate these modules to **Sanity** (preferred) with draft/publish, previews, restricted editor
-roles, and audit history for price changes. The typed models in `types.ts` are the contract, so the
-migration should not require component changes. Tracked as **Deferred** in `DECISIONS.md`.
+Sanity is now integrated and **optional**:
+
+- Studio is embedded at **`/studio`** (schemas in `src/sanity/schemaTypes/`).
+- Pages read content through **`src/lib/content.ts`**, which returns Sanity data when a project id is
+  configured and otherwise the local fallback above. Sanity fetch failures also fall back, so the
+  site never blanks.
+- Connect a project by setting `NEXT_PUBLIC_SANITY_PROJECT_ID` / `NEXT_PUBLIC_SANITY_DATASET` (see
+  `DEPLOYMENT.md`). Until a dataset has content, the built-in fallback is used.
+
+Modelled in Sanity today: site settings, products, Arcarna feature chapters, pricing plans, FAQs,
+legal documents, company updates. **Prices are structured fields, never free text.**
+
+Not yet modelled in Sanity (still edited in `src/content/**`): the pricing comparison rows and the
+Arcarna narrative scenes. These are the next candidates to migrate; the `types.ts` contract keeps
+that change isolated from components.
+
+### Editor workflow (once connected)
+
+Draft/publish, previews and role restrictions are provided by Sanity Studio. Configure editor roles
+and (for price-change audit history) document history in the Sanity project settings.
