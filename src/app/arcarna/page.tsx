@@ -14,6 +14,8 @@ export const metadata: Metadata = buildMetadata({
   path: '/arcarna',
 })
 
+export const revalidate = 60
+
 export default async function ArcarnaPage() {
   const [arcarnaChapters, pricingPlans] = await Promise.all([
     getArcarnaChapters(),

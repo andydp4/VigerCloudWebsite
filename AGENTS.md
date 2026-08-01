@@ -42,6 +42,13 @@ Standard scripts are in `package.json` (`dev`, `build`, `start`, `lint`, `typech
   data only when `NEXT_PUBLIC_SANITY_PROJECT_ID` is set (and not `placeholder`); otherwise, and on
   any Sanity fetch error, it falls back to the local arrays in `src/content/**`. So the site runs
   fully with no CMS credentials — don't treat a missing Sanity project as broken.
+- The Sanity dataset is **private** by default, so the server-side client (`src/sanity/client.ts`)
+  reads with `SANITY_API_READ_TOKEN`. If that token is missing at runtime, a private dataset returns
+  nothing and the site silently falls back to local content — so "CMS content not showing" usually
+  means the token isn't set (or the dataset should be made public). Content-driven pages use
+  `export const revalidate = 60` (ISR), so Studio edits appear within ~60s, not instantly.
+- Seed/reset baseline CMS content with `node scripts/seed-sanity.mjs` (needs a write token in
+  `SANITY_API_WRITE_TOKEN`; idempotent via stable ids).
 - Studio is embedded at `/studio`. When unconfigured it renders a setup notice (not the editor).
   Site chrome (header/footer) is intentionally hidden on `/studio` via `SiteChrome` (client,
   path-based). Sanity schemas are in `src/sanity/schemaTypes/`; the desk structure is

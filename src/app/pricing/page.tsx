@@ -13,6 +13,8 @@ export const metadata: Metadata = buildMetadata({
   path: '/pricing',
 })
 
+export const revalidate = 60
+
 export default async function PricingPage() {
   const [plans, faqs] = await Promise.all([getPricingPlans(), getFaqs()])
   return (

@@ -8,6 +8,8 @@ interface Params {
   params: { slug: string }
 }
 
+export const revalidate = 60
+
 export async function generateStaticParams() {
   const docs = await getLegalDocuments()
   return docs.map((doc) => ({ slug: doc.slug }))

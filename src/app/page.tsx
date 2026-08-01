@@ -17,6 +17,9 @@ const audiences = [
   { title: 'Leadership', body: 'Make confident calls backed by clear, auditable data.' },
 ]
 
+// Revalidate CMS-backed content periodically so Studio edits appear without a redeploy (ISR).
+export const revalidate = 60
+
 export default async function HomePage() {
   const [products, companyUpdates] = await Promise.all([getProducts(), getCompanyUpdates()])
   const flagship = products.find((p) => p.slug === 'arcarna')

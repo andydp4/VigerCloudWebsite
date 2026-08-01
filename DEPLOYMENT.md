@@ -60,6 +60,17 @@ Set these on the host (never commit real values). See `.env.example`.
 3. Redeploy. Visit `/studio`, sign in, and populate content. Until the dataset has content, the
    site continues to use built-in fallback data, so there is never a blank page.
 4. Schemas live in `src/sanity/schemaTypes/`; the content access seam is `src/lib/content.ts`.
+5. **Private datasets (Sanity default):** set `SANITY_API_READ_TOKEN` in the runtime environment so
+   the server can read published content. Without it, a private dataset returns nothing and the site
+   falls back to built-in content. Alternatively make the dataset public
+   (`npx sanity dataset visibility set <dataset> public`) — published marketing content is public
+   anyway — and no token is needed.
+6. **Seed initial content:** with a write token in `SANITY_API_WRITE_TOKEN`, run
+   `node scripts/seed-sanity.mjs` to (re)create the baseline placeholder documents. It is idempotent
+   (stable ids + createOrReplace).
+7. **Freshness (ISR):** content-driven pages use `export const revalidate = 60`, so Studio edits
+   appear within ~60s on the live site without a redeploy. Add a Sanity webhook to
+   on-demand-revalidate if you need instant updates.
 
 ### CORS origins (required for the Studio to log in / load / save)
 
