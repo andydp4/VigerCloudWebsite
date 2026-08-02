@@ -26,8 +26,36 @@ Hostinger's "Node.js app" runs a start command and provides `PORT`. Next reads `
 - Build command: `npm run build`
 - Start command: `npm run start` (i.e. `next start`, honours `PORT`)
 
-If using the standalone bundle directly (smaller footprint), copy `.next/standalone`,
-`.next/static` and `public/` to the server and run `node server.js`.
+If using the standalone bundle directly (smaller footprint), copy `.next/standalone`, then
+`.next/static` into `.next/standalone/.next/static` (and `public/` into `.next/standalone/public`
+if a `public/` folder exists), and run `PORT=<port> HOSTNAME=0.0.0.0 node server.js`.
+
+#### Hostinger quickstart (hPanel)
+
+Prerequisite: the code must be on the branch Hostinger pulls. Either merge PR #1 into `main`, or
+point the deploy at the feature branch.
+
+Path 1 — hPanel "Setup Node.js App" (or Git deploy):
+1. hPanel → Website → **Node.js** (or **Git**). Connect the GitHub repo/branch.
+2. Application root: repo root. Node version: 18+.
+3. Install command `npm ci`, build command `npm run build`, start command `npm run start`.
+4. Add the environment variables below (hPanel → Node.js app → Environment variables).
+5. Deploy, then open the app URL.
+
+Path 2 — Hostinger VPS (SSH):
+```bash
+git clone <repo> && cd VigerCloudWebsite && git checkout <branch>
+npm ci && npm run build
+# create a local env file (.env) with the variables below, then:
+PORT=3000 HOSTNAME=0.0.0.0 npm run start      # or run under pm2 / systemd
+```
+(Or use the Docker option below on a VPS.)
+
+After deploy:
+- Add your live domain(s) to Sanity CORS origins (see the CORS section) — e.g.
+  `https://yourdomain` with **Allow credentials** on — or the Studio at `/studio` won't log in.
+- Set `NEXT_PUBLIC_SITE_URL` to the live URL and set `NEXT_PUBLIC_APP_ENV` to the live value (see
+  the environment-variables table) so the site is indexable and canonical URLs/sitemap are correct.
 
 ### Option B — Docker (portable)
 
