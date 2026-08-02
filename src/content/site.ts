@@ -12,55 +12,59 @@ export const company = {
   sourceStatus: 'placeholder' as const,
 }
 
+// All enquiries are routed to the confirmed support inbox for now (support@vigercloud.com).
+// Per-route inboxes (partners@, press@, privacy@) can be introduced later via LEAD_NOTIFICATION_EMAIL.
+const SUPPORT_INBOX = 'support@vigercloud.com'
+
 export const contactRoutes: ContactRoute[] = [
   {
     type: 'trial',
     label: 'Start a free trial',
     description: 'Try Arcarna with your own workspace. No payment details required up front.',
-    destination: 'onboarding (test mode)',
-    sourceStatus: 'assumption',
+    destination: SUPPORT_INBOX,
+    sourceStatus: 'confirmed',
   },
   {
     type: 'demo',
     label: 'Book a demonstration',
     description: 'See Arcarna walked through by our team for your use case.',
-    destination: 'sales (test mode)',
-    sourceStatus: 'assumption',
+    destination: SUPPORT_INBOX,
+    sourceStatus: 'confirmed',
   },
   {
     type: 'general',
     label: 'General enquiry',
     description: 'Questions about Viger Cloud, the group, or anything else.',
-    destination: 'hello@ (destination pending confirmation)',
-    sourceStatus: 'blocked',
+    destination: SUPPORT_INBOX,
+    sourceStatus: 'confirmed',
   },
   {
     type: 'partner',
     label: 'Partner with us',
     description: 'Explore integration, referral or reseller partnerships.',
-    destination: 'partners@ (destination pending confirmation)',
-    sourceStatus: 'blocked',
+    destination: SUPPORT_INBOX,
+    sourceStatus: 'confirmed',
   },
   {
     type: 'support',
     label: 'Product support',
     description: 'Existing customer needing help with Arcarna.',
-    destination: 'support@ (destination pending confirmation)',
-    sourceStatus: 'blocked',
+    destination: SUPPORT_INBOX,
+    sourceStatus: 'confirmed',
   },
   {
     type: 'press',
     label: 'Press & media',
     description: 'Media enquiries and company information requests.',
-    destination: 'press@ (destination pending confirmation)',
-    sourceStatus: 'blocked',
+    destination: SUPPORT_INBOX,
+    sourceStatus: 'confirmed',
   },
   {
     type: 'privacy',
     label: 'Privacy & data requests',
     description: 'Exercise your data rights or ask a privacy question.',
-    destination: 'privacy@ (destination pending confirmation)',
-    sourceStatus: 'blocked',
+    destination: SUPPORT_INBOX,
+    sourceStatus: 'confirmed',
   },
 ]
 

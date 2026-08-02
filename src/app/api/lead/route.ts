@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { leadSchema, toFieldErrors } from '@/lib/leadSchema'
 import { getServerEnv } from '@/lib/env'
+import { sendLeadNotification } from '@/lib/email'
 
 /**
  * Lead intake endpoint (Brief 05).
@@ -32,7 +33,7 @@ export async function POST(request: Request) {
   const { LEAD_DELIVERY_MODE } = getServerEnv()
 
   if (LEAD_DELIVERY_MODE === 'test') {
-    // In test mode we only log server-side. No CRM/email delivery (BLOCKED pending decision).
+    // In test mode we only log server-side. No email is sent.
     // eslint-disable-next-line no-console
     console.info('[lead:test-mode]', {
       routeType: lead.routeType,
@@ -44,9 +45,16 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true, mode: 'test', routeType: lead.routeType })
   }
 
-  // Live delivery is intentionally not implemented until providers are confirmed and approved.
-  return NextResponse.json(
-    { ok: false, errors: { form: 'Live delivery is not enabled yet.' } },
-    { status: 503 },
-  )
+  // Live mode: email the enquiry to the support inbox (support@vigercloud.com by default).
+  try {
+    await sendLeadNotification(lead)
+    return NextResponse.json({ ok: true, mode: 'live', routeType: lead.routeType })
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[lead:send-failed]', error)
+    return NextResponse.json(
+      { ok: false, errors: { form: 'We could not send your enquiry. Please try again shortly.' } },
+      { status: 502 },
+    )
+  }
 }

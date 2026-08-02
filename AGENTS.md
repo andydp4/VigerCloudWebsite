@@ -36,8 +36,11 @@ Standard scripts are in `package.json` (`dev`, `build`, `start`, `lint`, `typech
   that's intended (Brief 06).
 - Client components that read the URL (`LeadForm` uses `useSearchParams`) must be wrapped in a
   `<Suspense>` boundary on their page, or the build fails. Existing pages already do this.
-- Lead delivery stays in test mode until the Staging Gate (Brief 05). Switching to live requires
-  confirmed providers/credentials and is deliberately unimplemented.
+- Lead delivery: `LEAD_DELIVERY_MODE=test` (default) logs only; `live` emails enquiries to
+  `support@vigercloud.com` via SMTP (`src/lib/email.ts`, Nodemailer). Live mode needs `SMTP_HOST`,
+  `SMTP_USER`, `SMTP_PASS` (+ optional `SMTP_PORT`/`SMTP_SECURE`, `LEAD_NOTIFICATION_EMAIL`,
+  `LEAD_FROM_EMAIL`); without them the API returns 502 in live mode. The enquirer is set as the
+  email reply-to. Recipient/routing is data-driven via `contactRoutes` in `src/content/site.ts`.
 - **CMS (Sanity) is optional.** Pages read content through `src/lib/content.ts`, which returns Sanity
   data only when `NEXT_PUBLIC_SANITY_PROJECT_ID` is set (and not `placeholder`); otherwise, and on
   any Sanity fetch error, it falls back to the local arrays in `src/content/**`. So the site runs

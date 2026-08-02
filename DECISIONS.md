@@ -15,6 +15,7 @@ copy, credentials, pricing entitlements, or final logo files.
 | C5 | Prices displayed **exclude VAT** | Wording present site-wide (Brief 05). |
 | C6 | CMS: **Sanity** (embedded Studio at `/studio`) | Brief 07 preferred. Optional with local fallback via `src/lib/content.ts`. |
 | C7 | Deployment: **Next.js standalone** output + Docker | Portable Node hosting incl. Hostinger (Brief 08). |
+| C8 | Lead/contact enquiries email to **support@vigercloud.com** | Confirmed. Sent via SMTP in `live` mode (`src/lib/email.ts`). |
 
 ## Assumptions (safe to proceed, confirm before launch)
 
@@ -32,7 +33,8 @@ copy, credentials, pricing entitlements, or final logo files.
 | B1 | Registered legal name, company number, address, VAT treatment | Legal/Finance |
 | B2 | Approved page copy and product claims | Marketing |
 | B3 | Final pricing figures and plan entitlements | Product/Finance |
-| B4 | Contact/privacy inbox destinations | Operations |
+| B4 | ~~Contact/privacy inbox destinations~~ → confirmed as support@vigercloud.com (C8). Per-route inboxes (partners@/press@/privacy@) optional later. | Operations |
+| B4b | SMTP credentials for support@vigercloud.com (to actually send in live mode) | Operations (set as env vars, never in source) |
 | B5 | CRM / email / booking / analytics providers + credentials | Operations (add as secrets, never in source) |
 | B6 | Original brand assets, fonts, final logo files | Brand |
 | B7 | Legal document wording (privacy ×2, cookies, terms, accessibility, security) | Legal |

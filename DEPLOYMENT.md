@@ -74,7 +74,11 @@ Set these on the host (never commit real values). See `.env.example`.
 | --- | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | yes | Canonical URLs, sitemap, robots. No trailing slash. |
 | `NEXT_PUBLIC_APP_ENV` | yes | `staging` or `production`. Only `production` allows search indexing. |
-| `LEAD_DELIVERY_MODE` | yes | Keep `test` until Staging Gate; `live` requires a provider (not yet implemented). |
+| `LEAD_DELIVERY_MODE` | yes | `test` = log only (no email). `live` = email enquiries to the support inbox via SMTP. |
+| `LEAD_NOTIFICATION_EMAIL` | live only | Recipient for enquiries. Defaults to `support@vigercloud.com`. |
+| `LEAD_FROM_EMAIL` | live only | Sender address (defaults to `SMTP_USER`). Must be allowed by your SMTP provider. |
+| `SMTP_HOST` / `SMTP_PORT` / `SMTP_SECURE` | live only | SMTP server (e.g. `smtp.hostinger.com` / `465` / `true`). |
+| `SMTP_USER` / `SMTP_PASS` | live only | SMTP mailbox credentials (e.g. the `support@vigercloud.com` mailbox). |
 | `NEXT_PUBLIC_SANITY_PROJECT_ID` | for CMS | Enables `/studio` and CMS-backed content. Without it, built-in fallback content is used. |
 | `NEXT_PUBLIC_SANITY_DATASET` | for CMS | e.g. `production`. |
 | `NEXT_PUBLIC_SANITY_API_VERSION` | optional | Defaults to `2024-10-01`. |
@@ -113,6 +117,23 @@ allow-listed on the project. An origin is `scheme://host[:port]` — **no path, 
 
 "Allow credentials" must be on because the Studio sends your auth session (and read token, if used).
 CORS only permits browser requests; it does not itself grant data access.
+
+## Lead / contact email delivery (Brief 05)
+
+Contact and lead enquiries are emailed to `support@vigercloud.com` when `LEAD_DELIVERY_MODE=live`.
+Delivery uses SMTP (Nodemailer), so it works with Hostinger's own email or any SMTP provider.
+
+To enable on the live site:
+1. Ensure the `support@vigercloud.com` mailbox exists (Hostinger email) and note its password, or
+   create a mailbox/API user with your email provider.
+2. Set the env vars: `LEAD_DELIVERY_MODE=live`, `SMTP_HOST` (Hostinger: `smtp.hostinger.com`),
+   `SMTP_PORT=465`, `SMTP_SECURE=true`, `SMTP_USER=support@vigercloud.com`, `SMTP_PASS=<password>`.
+   Optionally `LEAD_NOTIFICATION_EMAIL` (defaults to `support@vigercloud.com`) and `LEAD_FROM_EMAIL`.
+3. Redeploy/restart. Submit the contact form; the email arrives at the support inbox with the
+   enquirer set as **reply-to**, so support can reply directly.
+
+If SMTP is missing/misconfigured in live mode, the API returns a 502 and the form shows a friendly
+error (no enquiry is silently lost). Keep `test` mode anywhere you don't want real email sent.
 
 ## Staging → production checklist (Brief 08)
 
