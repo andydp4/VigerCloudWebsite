@@ -24,36 +24,14 @@ export interface Product {
 
 export interface FeatureChapter {
   id: string
-  /** Short verb label used in the Arcarna scene rail. */
+  /** One of the five ways customers use Arcarna. */
   label: 'Sell' | 'Understand' | 'Control' | 'Act' | 'Grow'
-  /** The business result stated BEFORE any technical mechanism (Brief 04). */
-  result: string
-  mechanism: string
-  sourceStatus: SourceStatus
-}
-
-export interface PricingPlan {
-  id: 'solo' | 'team' | 'growth' | 'scale'
-  name: string
-  audience: string
-  /** Monthly price in GBP, VAT excluded. `null` => consultation only (Brief 05). */
-  monthly: number | null
-  /** Annual price per month in GBP, VAT excluded. `null` => consultation only. */
-  annual: number | null
-  highlights: string[]
-  consultationOnly: boolean
-  sourceStatus: SourceStatus
-}
-
-export interface ComparisonRow {
-  capability: string
-  values: Record<PricingPlan['id'], string | boolean>
-  sourceStatus: SourceStatus
-}
-
-export interface Faq {
+  /** The commercial "truth to reveal" — a real business question. */
   question: string
-  answer: string
+  /** The chapter heading. */
+  heading: string
+  /** Supporting explanation. */
+  body: string
   sourceStatus: SourceStatus
 }
 
@@ -66,6 +44,29 @@ export type LeadRouteType =
   | 'support'
   | 'press'
   | 'privacy'
+
+export interface PricingPlan {
+  id: 'solo' | 'team' | 'growth' | 'scale'
+  name: string
+  /** "For:" line describing who the plan suits. */
+  audience: string
+  /** e.g. "1", "Up to 5". */
+  users: string
+  /** Monthly price in GBP, VAT excluded. */
+  monthly: number | null
+  /** Total annual price in GBP, VAT excluded (twelve months for the cost of ten). */
+  annualTotal: number | null
+  /** The plan's call-to-action label and the enquiry route it opens. */
+  ctaLabel: string
+  ctaRoute: LeadRouteType
+  sourceStatus: SourceStatus
+}
+
+export interface Faq {
+  question: string
+  answer: string
+  sourceStatus: SourceStatus
+}
 
 export interface ContactRoute {
   type: LeadRouteType

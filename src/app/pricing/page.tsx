@@ -3,13 +3,11 @@ import '@/styles/pricing.css'
 import { buildMetadata } from '@/lib/metadata'
 import { PricingTable } from '@/components/PricingTable'
 import { getFaqs, getPricingPlans } from '@/lib/content'
-import { comparisonRows } from '@/content/pricing'
-import { StatusBadge } from '@/components/StatusBadge'
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Pricing',
+  title: 'Arcarna pricing | Plans for independent retailers',
   description:
-    'Viger Cloud pricing for Arcarna — Solo, Team, Growth and Scale plans. Prices exclude VAT. Figures are illustrative placeholders pending confirmation.',
+    'Compare Arcarna plans for independent retailers, from a single user to growing multi-location organisations. Prices exclude VAT.',
   path: '/pricing',
 })
 
@@ -20,25 +18,21 @@ export default async function PricingPage() {
   return (
     <section className="section container stack">
       <div>
-        <div style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'center', flexWrap: 'wrap' }}>
-          <p className="eyebrow" style={{ margin: 0 }}>
-            Pricing
-          </p>
-          <StatusBadge status="placeholder" />
-        </div>
-        <h1 className="h2">Simple plans that grow with you</h1>
+        <p className="eyebrow">Arcarna pricing</p>
+        <h1 className="h2">Choose the level of access and support your business needs.</h1>
         <p className="lede">
-          Choose the plan that fits today and move up as you grow. Larger organisations get a
-          consultation instead of self-serve checkout. All prices exclude VAT.
+          Arcarna plans grow from one user exploring the core product to larger teams requiring
+          onboarding, migration and stronger governance. All prices below exclude VAT.
         </p>
       </div>
 
-      <div className="notice">
-        These figures are illustrative placeholders for build purposes only. Final prices and
-        entitlements are not yet approved (see the decision log).
-      </div>
+      <PricingTable plans={plans} />
 
-      <PricingTable plans={plans} rows={comparisonRows} />
+      <div className="notice">
+        Solo and Team customers can request a trial. Growth and Scale begin with a consultation
+        because onboarding, data migration, training, permissions and data-processing arrangements may
+        need to be agreed first. A detailed plan comparison is shared as part of that conversation.
+      </div>
 
       <div>
         <h2 className="h3" style={{ fontSize: 'var(--step-2)' }}>
@@ -47,11 +41,8 @@ export default async function PricingPage() {
         <div className="grid grid--2" style={{ marginTop: 'var(--space-4)' }}>
           {faqs.map((faq) => (
             <div className="card" key={faq.question}>
-              <div style={{ display: 'flex', gap: 'var(--space-2)', alignItems: 'center', flexWrap: 'wrap' }}>
-                <strong>{faq.question}</strong>
-                <StatusBadge status={faq.sourceStatus} />
-              </div>
-              <p className="muted" style={{ marginBottom: 0 }}>
+              <strong>{faq.question}</strong>
+              <p className="muted" style={{ marginBottom: 0, marginTop: 'var(--space-2)' }}>
                 {faq.answer}
               </p>
             </div>

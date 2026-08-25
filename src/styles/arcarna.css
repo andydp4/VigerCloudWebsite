@@ -97,6 +97,14 @@
   letter-spacing: -0.02em;
 }
 
+.chapter__question {
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--brand-accent-2);
+  margin-bottom: var(--space-2);
+}
+
 .chapter__result {
   font-size: var(--step-1);
   font-weight: 700;

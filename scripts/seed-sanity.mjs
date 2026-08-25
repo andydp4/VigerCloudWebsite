@@ -1,7 +1,10 @@
 /**
- * Seed the Sanity dataset with the current placeholder content (Brief 07 "creation").
+ * Seed the Sanity dataset with the approved website content (Brief 07 "creation").
  *
- * Idempotent: uses stable `_id`s with createOrReplace, so re-running updates in place.
+ * Idempotent: stable `_id`s with createOrReplace, so re-running updates in place. It also removes
+ * documents that are no longer used, and writes a few legacy fields alongside the current ones so a
+ * previously-deployed build keeps working during a rolling update.
+ *
  * Requires env: NEXT_PUBLIC_SANITY_PROJECT_ID, NEXT_PUBLIC_SANITY_DATASET, and a WRITE token in
  * SANITY_API_WRITE_TOKEN (falls back to SANITY_API_READ_TOKEN if it has write access).
  *
@@ -21,19 +24,19 @@ if (!projectId || projectId === 'placeholder' || !dataset || !token) {
 }
 
 const slug = (current) => ({ _type: 'slug', current })
-const ps = 'placeholder'
 
 const docs = [
   {
     _id: 'siteSettings',
     _type: 'siteSettings',
     brandName: 'Viger Cloud',
-    legalName: 'Viger Cloud (registered name pending confirmation)',
-    companyNumber: '00000000',
-    registeredAddress: 'Registered address pending confirmation',
+    legalName: 'Viger Cloud Ltd',
+    companyNumber: '17353296',
+    registeredJurisdiction: 'England and Wales',
+    registeredAddress: '101, 50 Apex Lofts, Warwick Street, Birmingham, B12 0BA',
     vatNote: 'All prices exclude VAT.',
-    group: 'Part of the Viger group (relationship pending confirmation).',
-    sourceStatus: ps,
+    group: 'Viger Cloud, part of the Viger Group.',
+    sourceStatus: 'confirmed',
   },
 
   // Products
@@ -42,141 +45,131 @@ const docs = [
     _type: 'product',
     name: 'Arcarna',
     slug: slug('arcarna'),
-    tagline: 'Sell, understand, control, act and grow — in one place.',
+    tagline: 'Reveal Your Truth.',
     description:
-      'Arcarna is Viger Cloud’s flagship product: a connected workspace that turns everyday commercial activity into clear decisions and measurable results.',
+      'Arcarna is Viger Cloud’s flagship retail intelligence and decision-support platform. It brings sales, stock, margin and customer information together to reveal what is shaping performance, understand why it matters and act sooner.',
     status: 'beta',
     brand: 'arcarna',
     order: 0,
-    sourceStatus: 'assumption',
+    sourceStatus: 'confirmed',
   },
   {
-    _id: 'product.viger-signals',
+    _id: 'product.viger-mail',
     _type: 'product',
-    name: 'Viger Signals',
-    slug: slug('viger-signals'),
-    tagline: 'Responsible, explainable insight across your data.',
+    name: 'Viger Mail',
+    slug: slug('viger-mail'),
+    tagline: 'Practical communication tools designed around independent businesses.',
     description:
-      'A planned analytics layer that surfaces trends and anomalies with transparent, auditable logic. Exploratory — not yet available.',
+      'A future communications product from Viger Cloud. Scope and availability are being confirmed, so we are not publishing detailed features or a release date yet.',
     status: 'coming-soon',
     brand: 'viger',
     order: 1,
-    sourceStatus: ps,
-  },
-  {
-    _id: 'product.viger-connect',
-    _type: 'product',
-    name: 'Viger Connect',
-    slug: slug('viger-connect'),
-    tagline: 'Secure integrations between the tools you already use.',
-    description:
-      'A concept for a governed integration hub. Included to show ecosystem direction; scope and availability are unconfirmed.',
-    status: 'concept',
-    brand: 'viger',
-    order: 2,
-    sourceStatus: ps,
+    sourceStatus: 'assumption',
   },
 
-  // Arcarna feature chapters
+  // Arcarna feature chapters (current fields + legacy result/mechanism for older builds).
   ...[
-    ['Sell', 'Close more of the right deals with less manual chasing.', 'A shared pipeline highlights the opportunities most likely to move, and drafts the next step for each one.'],
-    ['Understand', 'Know what is really happening across the business at a glance.', 'Live views connect activity, revenue and customer health so teams stop reconciling spreadsheets.'],
-    ['Control', 'Keep spend, access and risk inside deliberate limits.', 'Role-based controls and clear audit trails make it obvious who changed what, and when.'],
-    ['Act', 'Turn insight into action without switching tools.', 'Recommended actions can be approved and executed in place, then tracked to an outcome.'],
-    ['Grow', 'Repeat what works and expand with confidence.', 'Cohort and trend views show which motions compound, so you can invest where returns are proven.'],
-  ].map(([label, result, mechanism], i) => ({
+    [
+      'Sell',
+      'Where is the next worthwhile sale?',
+      'Put attention behind the sales that matter',
+      'See which opportunities, customers or product lines deserve attention instead of treating every signal as equally urgent. Arcarna helps you focus follow-up where the evidence suggests it can make a difference.',
+    ],
+    [
+      'Understand',
+      'What is really shaping performance?',
+      'See the business more clearly',
+      'Bring sales, products, stock, customers, locations and costs into a more useful view. Compare what changed, trace the likely drivers and spend less time reconciling separate reports.',
+    ],
+    [
+      'Control',
+      'Where are margin, stock or risk moving outside your limits?',
+      'Keep the important measures within view',
+      'Monitor the areas that protect the health of the business: margin, stock exposure, access, operational exceptions and agreed limits. Clear history helps you understand what changed and who acted.',
+    ],
+    [
+      'Act',
+      'What needs to happen next?',
+      'Move from truth to a practical next step',
+      'Turn a useful finding into assigned, trackable work without losing the evidence behind it. The aim is not simply to create more alerts; it is to help the right person respond and see whether the action worked.',
+    ],
+    [
+      'Grow',
+      'What is genuinely worth repeating?',
+      'Grow from what the evidence proves',
+      'Identify the products, customers, locations and operating choices that contribute to stronger performance. Use trends and comparisons to invest attention where the evidence is most persuasive.',
+    ],
+  ].map(([label, question, heading, body], i) => ({
     _id: `featureChapter.${label.toLowerCase()}`,
     _type: 'featureChapter',
     label,
-    result,
-    mechanism,
+    question,
+    heading,
+    body,
+    // legacy fields for previously-deployed builds
+    result: heading,
+    mechanism: body,
     order: i,
-    sourceStatus: ps,
+    sourceStatus: 'confirmed',
   })),
 
-  // Pricing plans
-  {
-    _id: 'pricingPlan.solo',
+  // Pricing plans (current fields + legacy fields for older builds).
+  ...[
+    ['solo', 'Solo', 'One owner or operator getting started', '1', 150, 1500, 'Request a Solo trial', 'trial'],
+    ['team', 'Team', 'A small team working from a shared view', 'Up to 5', 500, 5000, 'Request a Team trial', 'trial'],
+    ['growth', 'Growth', 'A growing business that may need onboarding, migration and training', 'Up to 15', 1050, 10500, 'Discuss the Growth plan', 'demo'],
+    ['scale', 'Scale', 'A larger or multi-location organisation with more complex requirements', 'Up to 50', 2500, 25000, 'Discuss the Scale plan', 'demo'],
+  ].map(([planId, name, audience, users, monthly, annualTotal, ctaLabel, ctaRoute], i) => ({
+    _id: `pricingPlan.${planId}`,
     _type: 'pricingPlan',
-    name: 'Solo',
-    planId: 'solo',
-    audience: 'Individuals getting started',
-    monthly: 19,
-    annual: 15,
-    highlights: ['1 workspace member', 'Core Sell + Understand', 'Community support'],
+    planId,
+    name,
+    audience,
+    users,
+    monthly,
+    annualTotal,
+    ctaLabel,
+    ctaRoute,
+    // legacy fields for previously-deployed builds
+    annual: monthly,
+    highlights: [],
     consultationOnly: false,
-    order: 0,
-    sourceStatus: ps,
-  },
-  {
-    _id: 'pricingPlan.team',
-    _type: 'pricingPlan',
-    name: 'Team',
-    planId: 'team',
-    audience: 'Small teams working together',
-    monthly: 49,
-    annual: 39,
-    highlights: ['Up to 10 members', 'Adds Control + Act', 'Email support'],
-    consultationOnly: false,
-    order: 1,
-    sourceStatus: ps,
-  },
-  {
-    _id: 'pricingPlan.growth',
-    _type: 'pricingPlan',
-    name: 'Growth',
-    planId: 'growth',
-    audience: 'Scaling organisations',
-    monthly: 129,
-    annual: 109,
-    highlights: ['Up to 50 members', 'Adds Grow analytics', 'Priority support'],
-    consultationOnly: false,
-    order: 2,
-    sourceStatus: ps,
-  },
-  {
-    _id: 'pricingPlan.scale',
-    _type: 'pricingPlan',
-    name: 'Scale',
-    planId: 'scale',
-    audience: 'Larger, regulated organisations',
-    monthly: null,
-    annual: null,
-    highlights: ['Unlimited members', 'Advanced governance', 'Consultation & onboarding'],
-    consultationOnly: true,
-    order: 3,
-    sourceStatus: ps,
-  },
+    order: i,
+    sourceStatus: 'confirmed',
+  })),
 
   // FAQs
-  {
-    _id: 'faq.availability',
+  ...[
+    [
+      'faq.vat',
+      'Do prices include VAT?',
+      'No. All prices shown exclude VAT. Any applicable VAT will be shown before purchase or included in your proposal.',
+    ],
+    [
+      'faq.annual',
+      'What does an annual plan cost?',
+      'Annual pricing gives you twelve months for the cost of ten compared with paying monthly.',
+    ],
+    [
+      'faq.trial',
+      'Can I try Arcarna first?',
+      'Solo and Team customers can request a trial. We will explain what is included, what data is needed and what happens when the trial ends before you begin.',
+    ],
+    [
+      'faq.consultation',
+      'Why do Growth and Scale begin with a conversation?',
+      'Larger organisations may need onboarding, data migration, training, multiple locations, permissions or data-processing arrangements. A short conversation helps us confirm the right setup and an accurate implementation plan.',
+    ],
+  ].map(([id, question, answer], i) => ({
+    _id: id,
     _type: 'faq',
-    question: 'Is Arcarna generally available?',
-    answer:
-      'Arcarna is in beta. Availability, entitlements and pricing shown on this site are illustrative and pending confirmation.',
-    order: 0,
-    sourceStatus: ps,
-  },
-  {
-    _id: 'faq.vat',
-    _type: 'faq',
-    question: 'Do prices include VAT?',
-    answer: 'No. All prices exclude VAT. Applicable tax is shown before any purchase.',
-    order: 1,
-    sourceStatus: 'assumption',
-  },
-  {
-    _id: 'faq.card',
-    _type: 'faq',
-    question: 'Do I need a payment card to start a trial?',
-    answer:
-      'No. We confirm that Arcarna suits your needs before any payment details are requested.',
-    order: 2,
-    sourceStatus: 'assumption',
-  },
+    question,
+    answer,
+    order: i,
+    sourceStatus: 'confirmed',
+  })),
 
-  // Legal documents
+  // Legal documents (structural records; pages are no-indexed until reviewed wording is ready).
   ...[
     ['privacy-viger', 'Viger Cloud Privacy Notice', 'viger', 'How Viger Cloud handles personal data across its corporate site and enquiries.'],
     ['privacy-arcarna', 'Arcarna Privacy Notice', 'arcarna', 'How personal data is handled within the Arcarna product experience.'],
@@ -192,29 +185,25 @@ const docs = [
     brand,
     effectiveDate: 'Pending',
     summary,
-    sourceStatus: ps,
+    sourceStatus: 'placeholder',
   })),
-
-  // Company updates
-  {
-    _id: 'update.arcarna-beta',
-    _type: 'companyUpdate',
-    title: 'Arcarna enters open beta',
-    date: '2026-07-01',
-    body: 'We are inviting more teams to try Arcarna. Content on this page is illustrative pending confirmation.',
-    sourceStatus: ps,
-  },
-  {
-    _id: 'update.site-foundation',
-    _type: 'companyUpdate',
-    title: 'Viger Cloud website foundation',
-    date: '2026-06-10',
-    body: 'A new corporate site foundation is in progress, built for accessibility and performance.',
-    sourceStatus: ps,
-  },
 ]
 
-const mutations = docs.map((doc) => ({ createOrReplace: doc }))
+// Documents removed in this content revision.
+const obsoleteIds = [
+  'product.viger-signals',
+  'product.viger-connect',
+  'update.arcarna-beta',
+  'update.site-foundation',
+  'update.cms-live',
+  'faq.availability',
+  'faq.card',
+]
+
+const mutations = [
+  ...docs.map((doc) => ({ createOrReplace: doc })),
+  ...obsoleteIds.map((id) => ({ delete: { id } })),
+]
 
 const url = `https://${projectId}.api.sanity.io/v${apiVersion}/data/mutate/${dataset}?returnIds=true`
 
@@ -229,4 +218,4 @@ if (!res.ok) {
   console.error('Seed failed:', JSON.stringify(body, null, 2))
   process.exit(1)
 }
-console.log(`Seeded ${docs.length} documents into "${dataset}".`)
+console.log(`Seeded ${docs.length} documents and removed ${obsoleteIds.length} obsolete ones in "${dataset}".`)

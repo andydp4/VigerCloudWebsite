@@ -4,10 +4,10 @@ export interface NavItem {
 }
 
 export const primaryNav: NavItem[] = [
-  { href: '/about', label: 'About' },
   { href: '/products', label: 'Products' },
   { href: '/arcarna', label: 'Arcarna' },
   { href: '/pricing', label: 'Pricing' },
+  { href: '/about', label: 'About' },
   { href: '/partners', label: 'Partners' },
   { href: '/contact', label: 'Contact' },
 ]

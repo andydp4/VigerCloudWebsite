@@ -2,24 +2,22 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import type { ComparisonRow, PricingPlan } from '@/content/types'
+import type { PricingPlan } from '@/content/types'
 import { track } from '@/lib/analytics'
 
 type Cycle = 'monthly' | 'annual'
 
 function priceLabel(plan: PricingPlan, cycle: Cycle) {
-  if (plan.consultationOnly) return 'Let’s talk'
-  const value = cycle === 'monthly' ? plan.monthly : plan.annual
+  const value = cycle === 'monthly' ? plan.monthly : plan.annualTotal
   if (value == null) return 'Let’s talk'
-  return `£${value}`
+  return `£${value.toLocaleString('en-GB')}`
 }
 
 interface PricingTableProps {
   plans: PricingPlan[]
-  rows: ComparisonRow[]
 }
 
-export function PricingTable({ plans: pricingPlans, rows: comparisonRows }: PricingTableProps) {
+export function PricingTable({ plans }: PricingTableProps) {
   const [cycle, setCycle] = useState<Cycle>('monthly')
 
   useEffect(() => {
@@ -47,11 +45,11 @@ export function PricingTable({ plans: pricingPlans, rows: comparisonRows }: Pric
         </button>
       </div>
       <p className="hint" style={{ marginTop: 'var(--space-2)' }}>
-        All prices exclude VAT. Figures are illustrative placeholders and not yet approved.
+        All prices exclude VAT. Annual plans provide twelve months of access for the cost of ten.
       </p>
 
       <div className="plan-grid">
-        {pricingPlans.map((plan) => (
+        {plans.map((plan) => (
           <div className="plan" key={plan.id}>
             <div>
               <strong>{plan.name}</strong>
@@ -61,68 +59,20 @@ export function PricingTable({ plans: pricingPlans, rows: comparisonRows }: Pric
             </div>
             <div className="plan__price">
               {priceLabel(plan, cycle)}
-              {!plan.consultationOnly && (
-                <small> /user/mo{cycle === 'annual' ? ', billed annually' : ''}</small>
-              )}
+              <small> {cycle === 'monthly' ? '/month' : '/year'}</small>
             </div>
             <ul>
-              {plan.highlights.map((h) => (
-                <li key={h}>{h}</li>
-              ))}
+              <li>{plan.users === '1' ? '1 user' : `${plan.users} users`}</li>
             </ul>
-            {plan.consultationOnly ? (
-              <Link
-                className="btn btn--ghost"
-                href="/contact?route=pricing"
-                onClick={() => track({ name: 'plan_select', plan: plan.id })}
-              >
-                Request a consultation
-              </Link>
-            ) : (
-              <Link
-                className="btn btn--primary"
-                href="/contact?route=trial"
-                onClick={() => track({ name: 'plan_select', plan: plan.id })}
-              >
-                Start free trial
-              </Link>
-            )}
+            <Link
+              className={plan.ctaRoute === 'trial' ? 'btn btn--primary' : 'btn btn--ghost'}
+              href={`/contact?route=${plan.ctaRoute}`}
+              onClick={() => track({ name: 'plan_select', plan: plan.id })}
+            >
+              {plan.ctaLabel}
+            </Link>
           </div>
         ))}
-      </div>
-
-      <div className="compare-scroll">
-        <table className="compare">
-          <caption className="hint" style={{ textAlign: 'left', marginBottom: 'var(--space-2)' }}>
-            Plan comparison (placeholder entitlements)
-          </caption>
-          <thead>
-            <tr>
-              <th scope="col">Capability</th>
-              {pricingPlans.map((p) => (
-                <th scope="col" key={p.id}>
-                  {p.name}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {comparisonRows.map((row) => (
-              <tr key={row.capability}>
-                <th scope="row" style={{ fontWeight: 600 }}>
-                  {row.capability}
-                </th>
-                {pricingPlans.map((p) => {
-                  const value = row.values[p.id]
-                  if (typeof value === 'boolean') {
-                    return <td key={p.id} data-yes={value} aria-label={value ? 'Included' : 'Not included'} />
-                  }
-                  return <td key={p.id}>{value}</td>
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
       </div>
     </div>
   )

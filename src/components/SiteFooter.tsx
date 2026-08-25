@@ -11,8 +11,9 @@ export function SiteFooter() {
         <div className="site-footer__grid">
           <div className="stack">
             <BrandMark />
-            <p className="muted" style={{ maxWidth: '32ch' }}>
-              Responsible, reliable software for modern teams. Home of Arcarna.
+            <p className="muted" style={{ maxWidth: '34ch' }}>
+              Viger Cloud builds clear, dependable software around real business problems. Home of
+              Arcarna.
             </p>
             <p className="muted" style={{ fontSize: 'var(--step--1)' }}>
               {company.group}
@@ -35,8 +36,8 @@ export function SiteFooter() {
 
         <div className="site-footer__legal">
           <span>
-            © {year} {company.legalName}. Company no. {company.companyNumber}.{' '}
-            {company.registeredAddress}.
+            © {year} {company.legalName}, registered in {company.registeredJurisdiction}. Company
+            number {company.companyNumber}. Registered office: {company.registeredAddress}.
           </span>
           <span>{company.vatNote}</span>
         </div>

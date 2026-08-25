@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { buildMetadata } from '@/lib/metadata'
 import { getLegalDocument, getLegalDocuments } from '@/lib/content'
-import { StatusBadge } from '@/components/StatusBadge'
 
 interface Params {
   params: { slug: string }
@@ -15,6 +14,8 @@ export async function generateStaticParams() {
   return docs.map((doc) => ({ slug: doc.slug }))
 }
 
+// Legal pages are structural templates pending reviewed wording, so they are never indexed
+// (Brief 06 / copy review). Remove `noindex` once each notice contains approved content.
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const doc = await getLegalDocument(params.slug)
   if (!doc) return buildMetadata({ title: 'Legal', path: `/legal/${params.slug}`, noindex: true })
@@ -22,6 +23,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     title: doc.title,
     description: doc.summary,
     path: `/legal/${doc.slug}`,
+    noindex: true,
   })
 }
 
@@ -41,12 +43,9 @@ export default async function LegalPage({ params }: Params) {
     <section className="section container stack" data-brand={wrapperBrand}>
       <div>
         <p className="eyebrow">{BRAND_LABEL[doc.brand]} · Legal</p>
-        <div style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'center', flexWrap: 'wrap' }}>
-          <h1 className="h2" style={{ margin: 0 }}>
-            {doc.title}
-          </h1>
-          <StatusBadge status={doc.sourceStatus} />
-        </div>
+        <h1 className="h2" style={{ margin: 0 }}>
+          {doc.title}
+        </h1>
         <p className="muted">Effective date: {doc.effectiveDate}</p>
       </div>
 

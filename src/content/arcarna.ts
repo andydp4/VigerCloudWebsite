@@ -1,47 +1,47 @@
 import type { FeatureChapter } from './types'
 
-// Arcarna feature chapters (Brief 04). Each states the business RESULT before the mechanism.
-// Copy is placeholder/assumption pending real product content from Viger.
+// Arcarna feature chapters (Brief 04). Each begins with a "truth to reveal" — a real retail
+// question — then the heading and a plain-English explanation. Kept commercially specific.
 export const arcarnaChapters: FeatureChapter[] = [
   {
     id: 'sell',
     label: 'Sell',
-    result: 'Close more of the right deals with less manual chasing.',
-    mechanism:
-      'A shared pipeline highlights the opportunities most likely to move, and drafts the next step for each one.',
-    sourceStatus: 'placeholder',
+    question: 'Where is the next worthwhile sale?',
+    heading: 'Put attention behind the sales that matter',
+    body: 'See which opportunities, customers or product lines deserve attention instead of treating every signal as equally urgent. Arcarna helps you focus follow-up where the evidence suggests it can make a difference.',
+    sourceStatus: 'confirmed',
   },
   {
     id: 'understand',
     label: 'Understand',
-    result: 'Know what is really happening across the business at a glance.',
-    mechanism:
-      'Live views connect activity, revenue and customer health so teams stop reconciling spreadsheets.',
-    sourceStatus: 'placeholder',
+    question: 'What is really shaping performance?',
+    heading: 'See the business more clearly',
+    body: 'Bring sales, products, stock, customers, locations and costs into a more useful view. Compare what changed, trace the likely drivers and spend less time reconciling separate reports.',
+    sourceStatus: 'confirmed',
   },
   {
     id: 'control',
     label: 'Control',
-    result: 'Keep spend, access and risk inside deliberate limits.',
-    mechanism:
-      'Role-based controls and clear audit trails make it obvious who changed what, and when.',
-    sourceStatus: 'placeholder',
+    question: 'Where are margin, stock or risk moving outside your limits?',
+    heading: 'Keep the important measures within view',
+    body: 'Monitor the areas that protect the health of the business: margin, stock exposure, access, operational exceptions and agreed limits. Clear history helps you understand what changed and who acted.',
+    sourceStatus: 'confirmed',
   },
   {
     id: 'act',
     label: 'Act',
-    result: 'Turn insight into action without switching tools.',
-    mechanism:
-      'Recommended actions can be approved and executed in place, then tracked to an outcome.',
-    sourceStatus: 'placeholder',
+    question: 'What needs to happen next?',
+    heading: 'Move from truth to a practical next step',
+    body: 'Turn a useful finding into assigned, trackable work without losing the evidence behind it. The aim is not simply to create more alerts; it is to help the right person respond and see whether the action worked.',
+    sourceStatus: 'confirmed',
   },
   {
     id: 'grow',
     label: 'Grow',
-    result: 'Repeat what works and expand with confidence.',
-    mechanism:
-      'Cohort and trend views show which motions compound, so you can invest where returns are proven.',
-    sourceStatus: 'placeholder',
+    question: 'What is genuinely worth repeating?',
+    heading: 'Grow from what the evidence proves',
+    body: 'Identify the products, customers, locations and operating choices that contribute to stronger performance. Use trends and comparisons to invest attention where the evidence is most persuasive.',
+    sourceStatus: 'confirmed',
   },
 ]
 
@@ -52,36 +52,24 @@ export interface ArcarnaScene {
   body: string
 }
 
-// Narrative scenes for the scroll experience (Reveal, Problem, Question -> Truth -> Action).
-export const arcarnaScenes: ArcarnaScene[] = [
-  {
-    id: 'reveal',
-    kicker: 'Arcarna',
-    title: 'The clarity layer for your business',
-    body: 'One connected place to sell, understand, control, act and grow.',
-  },
-  {
-    id: 'problem',
-    kicker: 'The problem',
-    title: 'Work is scattered across too many tools',
-    body: 'Decisions wait on exports, and context is lost between apps.',
-  },
+// Narrative method scenes: Question -> Truth -> Action.
+export const arcarnaMethod: ArcarnaScene[] = [
   {
     id: 'question',
-    kicker: 'The question',
-    title: 'What if the answer was already in front of you?',
-    body: 'Not another dashboard to check — a clear next step you can trust.',
+    kicker: 'Question',
+    title: 'Start with the commercial question, not the report',
+    body: 'Ask what is driving a change, where value is being lost or what deserves attention.',
   },
   {
     id: 'truth',
-    kicker: 'The truth',
-    title: 'Your data already knows the shape of the day',
-    body: 'Arcarna connects it, explains it, and keeps the reasoning visible.',
+    kicker: 'Truth',
+    title: 'See the evidence and the reasoning behind it',
+    body: 'Arcarna connects the relevant evidence and explains the pattern it sees. Sources and reasoning stay visible so you can judge the answer for yourself.',
   },
   {
     id: 'action',
-    kicker: 'The action',
-    title: 'Decide and act in one motion',
-    body: 'Approve the recommended step and watch it through to a result.',
+    kicker: 'Action',
+    title: 'Turn understanding into a clear next step',
+    body: 'Decide what to change, who should act and what result to watch.',
   },
 ]

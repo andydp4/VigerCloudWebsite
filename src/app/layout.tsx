@@ -9,7 +9,7 @@ import { allowIndexing, publicEnv } from '@/lib/env'
 export const metadata: Metadata = {
   metadataBase: new URL(publicEnv.NEXT_PUBLIC_SITE_URL),
   title: {
-    default: `${SITE_NAME} — Responsible, reliable software for modern teams`,
+    default: `${SITE_NAME} | Practical software for independent businesses`,
     template: `%s · ${SITE_NAME}`,
   },
   description: DEFAULT_DESCRIPTION,

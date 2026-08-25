@@ -1,38 +1,28 @@
 import type { Product } from './types'
 
-// Product portfolio. Statuses are honest (Brief 03: "no placeholder portfolio"): only Arcarna is
-// presented as a real flagship; others are clearly labelled concept/coming-soon and marked as
-// assumptions pending confirmation in DECISIONS.md.
+// Product portfolio (Brief 03: "no placeholder portfolio"). Only Arcarna is presented as a real
+// flagship. Viger Mail is shown as a future product with an honest status. Invented concepts
+// (Viger Signals / Viger Connect) have been removed.
 export const products: Product[] = [
   {
     slug: 'arcarna',
     name: 'Arcarna',
-    tagline: 'Sell, understand, control, act and grow — in one place.',
+    tagline: 'Reveal Your Truth.',
     description:
-      'Arcarna is Viger Cloud’s flagship product: a connected workspace that turns everyday commercial activity into clear decisions and measurable results.',
+      'Arcarna is Viger Cloud’s flagship retail intelligence and decision-support platform. It brings sales, stock, margin and customer information together to reveal what is shaping performance, understand why it matters and act sooner.',
     status: 'beta',
     brand: 'arcarna',
-    sourceStatus: 'assumption',
+    sourceStatus: 'confirmed',
   },
   {
-    slug: 'viger-signals',
-    name: 'Viger Signals',
-    tagline: 'Responsible, explainable insight across your data.',
+    slug: 'viger-mail',
+    name: 'Viger Mail',
+    tagline: 'Practical communication tools designed around independent businesses.',
     description:
-      'A planned analytics layer that surfaces trends and anomalies with transparent, auditable logic. Exploratory — not yet available.',
+      'A future communications product from Viger Cloud. Scope and availability are being confirmed, so we are not publishing detailed features or a release date yet.',
     status: 'coming-soon',
     brand: 'viger',
-    sourceStatus: 'placeholder',
-  },
-  {
-    slug: 'viger-connect',
-    name: 'Viger Connect',
-    tagline: 'Secure integrations between the tools you already use.',
-    description:
-      'A concept for a governed integration hub. Included to show ecosystem direction; scope and availability are unconfirmed.',
-    status: 'concept',
-    brand: 'viger',
-    sourceStatus: 'placeholder',
+    sourceStatus: 'assumption',
   },
 ]
 

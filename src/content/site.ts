@@ -1,68 +1,62 @@
 import type { CompanyUpdate, ContactRoute, Faq, LegalDocument } from './types'
 
-// Company/legal wording is a PLACEHOLDER. Statutory details (registered name, number, address,
-// VAT) are BLOCKED pending confirmation (Brief 00). Do not treat as final legal copy.
+// Verified statutory details (Brief 00 confirmed).
 export const company = {
   brandName: 'Viger Cloud',
-  legalName: 'Viger Cloud (registered name pending confirmation)',
-  companyNumber: '00000000',
-  registeredAddress: 'Registered address pending confirmation',
+  legalName: 'Viger Cloud Ltd',
+  companyNumber: '17353296',
+  registeredJurisdiction: 'England and Wales',
+  registeredAddress: '101, 50 Apex Lofts, Warwick Street, Birmingham, B12 0BA',
   vatNote: 'All prices exclude VAT.',
-  group: 'Part of the Viger group (relationship pending confirmation).',
-  sourceStatus: 'placeholder' as const,
+  group: 'Viger Cloud, part of the Viger Group.',
+  sourceStatus: 'confirmed' as const,
 }
 
-// All enquiries are routed to the confirmed support inbox for now (support@vigercloud.com).
-// Per-route inboxes (partners@, press@, privacy@) can be introduced later via LEAD_NOTIFICATION_EMAIL.
+// Enquiries initially go to support@vigercloud.com and are passed to the appropriate person.
 const SUPPORT_INBOX = 'support@vigercloud.com'
 
 export const contactRoutes: ContactRoute[] = [
   {
     type: 'trial',
-    label: 'Start a free trial',
-    description: 'Try Arcarna with your own workspace. No payment details required up front.',
+    label: 'Request an Arcarna trial',
+    description:
+      'Tell us about your business, the systems you use and the questions you would like Arcarna to help answer. We will explain suitability, setup and next steps.',
     destination: SUPPORT_INBOX,
     sourceStatus: 'confirmed',
   },
   {
     type: 'demo',
     label: 'Book a demonstration',
-    description: 'See Arcarna walked through by our team for your use case.',
-    destination: SUPPORT_INBOX,
-    sourceStatus: 'confirmed',
-  },
-  {
-    type: 'general',
-    label: 'General enquiry',
-    description: 'Questions about Viger Cloud, the group, or anything else.',
-    destination: SUPPORT_INBOX,
-    sourceStatus: 'confirmed',
-  },
-  {
-    type: 'partner',
-    label: 'Partner with us',
-    description: 'Explore integration, referral or reseller partnerships.',
+    description:
+      'See Arcarna through the type of commercial questions that matter to your business.',
     destination: SUPPORT_INBOX,
     sourceStatus: 'confirmed',
   },
   {
     type: 'support',
     label: 'Product support',
-    description: 'Existing customer needing help with Arcarna.',
+    description: 'Get help with an existing Arcarna account, access or product issue.',
     destination: SUPPORT_INBOX,
     sourceStatus: 'confirmed',
   },
   {
-    type: 'press',
-    label: 'Press & media',
-    description: 'Media enquiries and company information requests.',
+    type: 'partner',
+    label: 'Partnership enquiry',
+    description: 'Discuss an integration, referral, advisory or service partnership.',
+    destination: SUPPORT_INBOX,
+    sourceStatus: 'confirmed',
+  },
+  {
+    type: 'general',
+    label: 'General enquiry',
+    description: 'Ask about Viger Cloud, the Viger Group, careers, suppliers, press or another matter.',
     destination: SUPPORT_INBOX,
     sourceStatus: 'confirmed',
   },
   {
     type: 'privacy',
-    label: 'Privacy & data requests',
-    description: 'Exercise your data rights or ask a privacy question.',
+    label: 'Privacy and data request',
+    description: 'Ask how personal data is handled or exercise a data protection right.',
     destination: SUPPORT_INBOX,
     sourceStatus: 'confirmed',
   },
@@ -70,21 +64,28 @@ export const contactRoutes: ContactRoute[] = [
 
 export const faqs: Faq[] = [
   {
-    question: 'Is Arcarna generally available?',
-    answer:
-      'Arcarna is in beta. Availability, entitlements and pricing shown on this site are illustrative and pending confirmation.',
-    sourceStatus: 'placeholder',
-  },
-  {
     question: 'Do prices include VAT?',
-    answer: 'No. All prices exclude VAT. Applicable tax is shown before any purchase.',
-    sourceStatus: 'assumption',
+    answer:
+      'No. All prices shown exclude VAT. Any applicable VAT will be shown before purchase or included in your proposal.',
+    sourceStatus: 'confirmed',
   },
   {
-    question: 'Do I need a payment card to start a trial?',
+    question: 'What does an annual plan cost?',
     answer:
-      'No. We confirm that Arcarna suits your needs before any payment details are requested.',
-    sourceStatus: 'assumption',
+      'Annual pricing gives you twelve months for the cost of ten compared with paying monthly.',
+    sourceStatus: 'confirmed',
+  },
+  {
+    question: 'Can I try Arcarna first?',
+    answer:
+      'Solo and Team customers can request a trial. We will explain what is included, what data is needed and what happens when the trial ends before you begin.',
+    sourceStatus: 'confirmed',
+  },
+  {
+    question: 'Why do Growth and Scale begin with a conversation?',
+    answer:
+      'Larger organisations may need onboarding, data migration, training, multiple locations, permissions or data-processing arrangements. A short conversation helps us confirm the right setup and an accurate implementation plan.',
+    sourceStatus: 'confirmed',
   },
 ]
 
@@ -139,20 +140,8 @@ export const legalDocuments: LegalDocument[] = [
   },
 ]
 
-export const companyUpdates: CompanyUpdate[] = [
-  {
-    date: '2026-07-01',
-    title: 'Arcarna enters open beta',
-    body: 'We are inviting more teams to try Arcarna. Content on this page is illustrative pending confirmation.',
-    sourceStatus: 'placeholder',
-  },
-  {
-    date: '2026-06-10',
-    title: 'Viger Cloud website foundation',
-    body: 'A new corporate site foundation is in progress, built for accessibility and performance.',
-    sourceStatus: 'placeholder',
-  },
-]
+// No public "Latest updates" until real dated news is approved (the section is hidden when empty).
+export const companyUpdates: CompanyUpdate[] = []
 
 export function getLegalDocument(slug: string): LegalDocument | undefined {
   return legalDocuments.find((d) => d.slug === slug)

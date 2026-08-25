@@ -45,7 +45,7 @@ export function SiteHeader() {
             )
           })}
           <Link className="btn btn--primary" href="/contact?route=trial" onClick={() => setOpen(false)}>
-            Start free trial
+            Request an Arcarna trial
           </Link>
         </nav>
       </div>

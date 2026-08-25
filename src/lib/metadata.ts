@@ -3,7 +3,7 @@ import { allowIndexing, publicEnv } from './env'
 
 const SITE_NAME = 'Viger Cloud'
 const DEFAULT_DESCRIPTION =
-  'Viger Cloud builds responsible, reliable software for modern teams — home of Arcarna.'
+  'Viger Cloud builds practical software for independent businesses, helping owners understand performance, protect margin and make better decisions. Home of Arcarna.'
 
 interface PageMetaInput {
   title: string

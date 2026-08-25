@@ -1,81 +1,147 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { buildMetadata } from '@/lib/metadata'
-import { getCompanyUpdates, getProducts } from '@/lib/content'
-import { StatusBadge } from '@/components/StatusBadge'
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Viger Cloud',
+  title: 'Viger Cloud | Practical software for independent businesses',
   description:
-    'Viger Cloud builds responsible, reliable software for modern teams — home of Arcarna. Start a free trial or book a demo.',
+    'Viger Cloud builds practical technology that helps independent retailers and owner-led businesses understand performance, protect margin and make better decisions. Discover Arcarna.',
   path: '/',
 })
 
-const audiences = [
-  { title: 'Operations', body: 'See the whole picture and act without switching tools.' },
-  { title: 'Revenue teams', body: 'Focus on the deals most likely to move, sooner.' },
-  { title: 'Leadership', body: 'Make confident calls backed by clear, auditable data.' },
+const wayItems = [
+  {
+    title: 'Understand the problem',
+    body: 'Start with the work, the obstacle and the person experiencing it.',
+  },
+  {
+    title: 'Build the practical answer',
+    body: 'Remove unnecessary complexity and build with care, precision and purpose.',
+  },
+  {
+    title: 'Improve with evidence',
+    body: 'Learn from real use, communicate honestly and earn reliability over time.',
+  },
 ]
 
-// Revalidate CMS-backed content periodically so Studio edits appear without a redeploy (ISR).
-export const revalidate = 60
+const audiences = [
+  {
+    title: 'Independent retailers',
+    body: 'Understand sales, stock, margin and customers across one shop or several locations.',
+  },
+  {
+    title: 'Owners and directors',
+    body: 'Get a clearer view of performance without waiting for several reports to be assembled.',
+  },
+  {
+    title: 'Shop and operations managers',
+    body: 'See what needs attention and give the team a more informed next step.',
+  },
+  {
+    title: 'Retail technology partners',
+    body: 'Connect useful systems and data so shared customers get more value from the tools they already use.',
+  },
+]
 
-export default async function HomePage() {
-  const [products, companyUpdates] = await Promise.all([getProducts(), getCompanyUpdates()])
-  const flagship = products.find((p) => p.slug === 'arcarna')
-
+export default function HomePage() {
   return (
     <>
       <section className="section container">
-        <p className="eyebrow">Viger Cloud</p>
-        <h1 className="h1" style={{ maxWidth: '18ch' }}>
-          Clarity and control for how modern teams work
+        <p className="eyebrow">Technology for independent business</p>
+        <h1 className="h1" style={{ maxWidth: '20ch' }}>
+          Practical software, built around real business problems.
         </h1>
         <p className="lede" style={{ marginTop: 'var(--space-4)' }}>
-          Viger Cloud builds responsible, reliable software that turns everyday activity into clear
-          decisions. Our flagship product, Arcarna, brings selling, understanding, control and
-          growth into one connected place.
+          Viger Cloud turns the Viger principles of simplicity, precision, practicality and
+          reliability into useful technology. We understand the problem first, remove unnecessary
+          complexity and build dependable software that gives independent businesses more time and
+          control.
         </p>
         <div className="cta-row">
-          <Link className="btn btn--primary" href="/contact?route=trial">
-            Start a free trial
+          <Link className="btn btn--primary" href="/products">
+            Explore our products
           </Link>
           <Link className="btn btn--ghost" href="/arcarna">
-            Explore Arcarna
+            Discover Arcarna
           </Link>
         </div>
       </section>
 
-      {flagship && (
-        <section className="section--tight container">
-          <div className="card">
-            <div style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'center', flexWrap: 'wrap' }}>
-              <p className="eyebrow" style={{ margin: 0 }}>
-                Featured product
-              </p>
-              <StatusBadge status={flagship.sourceStatus} />
-            </div>
-            <h2 className="h3" style={{ marginTop: 'var(--space-3)' }}>
-              {flagship.name}
-            </h2>
-            <p className="lede">{flagship.tagline}</p>
-            <p className="muted">{flagship.description}</p>
-            <div className="cta-row">
-              <Link className="btn btn--primary" href="/arcarna">
-                See the Arcarna story
-              </Link>
-              <Link className="btn btn--ghost" href="/pricing">
-                View pricing
-              </Link>
-            </div>
+      <section className="section--tight container">
+        <div className="card stack">
+          <h2 className="h3">Software should solve the problem, not add to it</h2>
+          <p className="muted">
+            Independent businesses are often asked to fit their work around software designed without
+            their reality in mind. That creates more steps, more administration and more systems to
+            manage.
+          </p>
+          <p className="muted">
+            We take a different approach. We begin with the person doing the work and the outcome
+            they need. Then we design the clearest practical route between the two.
+          </p>
+          <p className="muted">
+            Our mission is to remove unnecessary complexity, solve real operational problems and give
+            independent businesses more time and control.
+          </p>
+        </div>
+      </section>
+
+      <section className="section--tight container">
+        <div className="card">
+          <p className="eyebrow" style={{ margin: 0 }}>
+            Our flagship product
+          </p>
+          <h2 className="h3" style={{ marginTop: 'var(--space-2)' }}>
+            Meet Arcarna
+          </h2>
+          <p className="lede" style={{ fontWeight: 700 }}>
+            Reveal Your Truth.
+          </p>
+          <p className="muted">
+            Arcarna brings sales, stock, customer and operational information into one place to reveal
+            the commercial truth inside it. Instead of only reporting what happened, it helps
+            independent retailers understand why it happened, see what deserves attention and take a
+            practical next step.
+          </p>
+          <p className="muted">
+            Use it to investigate the questions that shape day-to-day performance: Which products make
+            money? Where is margin leaking? Which customers are drifting away? What changed, and what
+            should happen next?
+          </p>
+          <div className="cta-row">
+            <Link className="btn btn--primary" href="/arcarna">
+              Discover Arcarna
+            </Link>
+            <Link className="btn btn--ghost" href="/pricing">
+              View Arcarna pricing
+            </Link>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
+
+      <section className="section--tight container">
+        <p className="eyebrow">The Viger Cloud Way</p>
+        <h2 className="h3">What Viger Cloud builds</h2>
+        <p className="lede">
+          The Viger Way began with a commitment to simplicity, efficiency, practicality and
+          reliability. Viger Cloud carries those principles into software.
+        </p>
+        <div className="grid grid--3" style={{ marginTop: 'var(--space-5)' }}>
+          {wayItems.map((item) => (
+            <div className="card" key={item.title}>
+              <h3 className="h3" style={{ fontSize: 'var(--step-1)' }}>
+                {item.title}
+              </h3>
+              <p className="muted">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
       <section className="section--tight container">
         <p className="eyebrow">Who it&apos;s for</p>
-        <h2 className="h3">Built for the people who run the business</h2>
-        <div className="grid grid--3" style={{ marginTop: 'var(--space-5)' }}>
+        <h2 className="h3">Built for independent operators</h2>
+        <div className="grid grid--2" style={{ marginTop: 'var(--space-5)' }}>
           {audiences.map((a) => (
             <div className="card" key={a.title}>
               <h3 className="h3" style={{ fontSize: 'var(--step-1)' }}>
@@ -90,59 +156,57 @@ export default async function HomePage() {
       <section className="section--tight container">
         <div className="grid grid--2">
           <div className="card stack">
-            <p className="eyebrow" style={{ margin: 0 }}>
-              Responsible by design
-            </p>
             <h2 className="h3" style={{ fontSize: 'var(--step-2)' }}>
-              Reliability and data you can stand behind
+              Independent should not mean under-informed
             </h2>
             <p className="muted">
-              We build for uptime, clear reasoning and transparent data handling. Our approach to
-              security and privacy is written in plain English.
+              Large organisations can employ analysts and build internal systems around every
+              commercial question. Independent businesses rarely have that luxury, even though their
+              decisions are just as important.
+            </p>
+            <p className="muted">
+              We believe useful business intelligence should fit the reality of an owner-led company:
+              limited time, practical priorities and a need to see the reasoning before trusting the
+              answer.
+            </p>
+          </div>
+
+          <div className="card stack">
+            <h2 className="h3" style={{ fontSize: 'var(--step-2)' }}>
+              Clear about the product and careful with the data behind it
+            </h2>
+            <p className="muted">
+              Good decisions depend on information people can trust. We design our products to keep
+              sources, reasoning and changes understandable rather than hiding them behind a
+              confident-looking score.
+            </p>
+            <p className="muted">
+              We also explain product availability, pricing, privacy and security in plain English.
+              Where something is still being developed or confirmed, we say so before asking a
+              customer to rely on it.
             </p>
             <div className="cta-row" style={{ marginTop: 0 }}>
               <Link className="btn btn--ghost" href="/legal/security">
-                Security overview
+                Read about security and data use
               </Link>
             </div>
-          </div>
-
-          <div className="card">
-            <p className="eyebrow" style={{ margin: 0 }}>
-              Latest updates
-            </p>
-            <ul className="stack" style={{ listStyle: 'none', padding: 0, marginTop: 'var(--space-4)' }}>
-              {companyUpdates.map((u) => (
-                <li key={u.title}>
-                  <div style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'baseline' }}>
-                    <time className="muted" style={{ fontSize: 'var(--step--1)' }} dateTime={u.date}>
-                      {u.date}
-                    </time>
-                    <StatusBadge status={u.sourceStatus} />
-                  </div>
-                  <strong>{u.title}</strong>
-                  <p className="muted" style={{ margin: '4px 0 0' }}>
-                    {u.body}
-                  </p>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
       </section>
 
       <section className="section--tight container">
         <div className="card" style={{ textAlign: 'center' }}>
-          <h2 className="h3">Ready to see it in action?</h2>
+          <h2 className="h3">Start with the question your business needs answered</h2>
           <p className="lede" style={{ marginInline: 'auto' }}>
-            Start a free trial or book a demonstration tailored to your team.
+            Tell us what you are trying to understand or improve. We can show you how Arcarna
+            approaches it and whether the product is a sensible fit for your business.
           </p>
           <div className="cta-row" style={{ justifyContent: 'center' }}>
-            <Link className="btn btn--primary" href="/contact?route=trial">
-              Start free trial
+            <Link className="btn btn--primary" href="/contact?route=demo">
+              Book an Arcarna demonstration
             </Link>
-            <Link className="btn btn--ghost" href="/contact?route=demo">
-              Book a demo
+            <Link className="btn btn--ghost" href="/contact?route=general">
+              Speak to Viger Cloud
             </Link>
           </div>
         </div>
