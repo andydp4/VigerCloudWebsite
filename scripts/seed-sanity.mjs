@@ -183,7 +183,7 @@ const docs = [
     title,
     slug: slug(s),
     brand,
-    effectiveDate: 'Pending',
+    effectiveDate: 'Working draft — 25 August 2026',
     summary,
     sourceStatus: 'placeholder',
   })),
