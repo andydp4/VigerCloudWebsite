@@ -10,7 +10,7 @@ export function SiteFooter() {
       <div className="container">
         <div className="site-footer__grid">
           <div className="stack">
-            <BrandMark />
+            <BrandMark height={54} />
             <p className="muted" style={{ maxWidth: '34ch' }}>
               Viger Cloud builds clear, dependable software around real business problems. Home of
               Arcarna.
