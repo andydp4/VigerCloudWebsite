@@ -19,12 +19,12 @@
   "dependencies": {
     "@sanity/image-url": "^1.2.0",
     "@sanity/vision": "^3.99.0",
-    "next": "^14.2.13",
-    "next-sanity": "^9.12.3",
-    "nodemailer": "^9.0.3",
+    "next": "^16.3.8",
+    "next-sanity": "^13.3.4",
+    "nodemailer": "^10.0.9",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "sanity": "^3.99.0",
+    "sanity": "^6.17.0",
     "styled-components": "^6.4.4",
     "zod": "^3.23.8"
   },
@@ -41,6 +41,6 @@
     "eslint-config-next": "^14.2.13",
     "jsdom": "^25.0.0",
     "typescript": "^5.5.4",
-    "vitest": "^2.1.1"
+    "vitest": "^5.0.3"
   }
 }
